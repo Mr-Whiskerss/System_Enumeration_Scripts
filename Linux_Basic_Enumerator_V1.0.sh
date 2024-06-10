@@ -2,7 +2,7 @@
 #Author - MrWhiskers 
 #This script does not need root priv to run just make it excutable and run it with ./Linux_Basic_Enumerator.sh
 #This Script attempts to enuemrate most common information nededed and includes multiple commands to run on different systems. 
-# STILL IN BETA PLEASE RECOMMEND CHANGES.Reach out over twitter or linkedin.
+#STILL IN BETA PLEASE RECOMMEND CHANGES.Reach out over twitter or linkedin.
 
 
 #!/bin/bash
