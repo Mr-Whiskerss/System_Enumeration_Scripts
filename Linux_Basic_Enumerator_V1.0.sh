@@ -130,7 +130,7 @@ cat /etc/sysconfig/network 2>/dev/null | tee -a "$OUTPUT"
 echo "" | tee -a "$OUTPUT"
 
 echo "Network Settings:" | tee -a "$OUTPUT"
-cat /etc/resolv.conf | tee -a "$OUTPUT"
+cat /etc/resolvectl | tee -a "$OUTPUT"
 cat /etc/sysconfig/network 2>/dev/null | tee -a "$OUTPUT"
 cat /etc/networks | tee -a "$OUTPUT"
 iptables -L 2>/dev/null | tee -a "$OUTPUT"
