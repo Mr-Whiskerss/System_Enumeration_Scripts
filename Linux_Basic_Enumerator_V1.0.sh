@@ -111,6 +111,22 @@ cat /etc/anacrontab 2>/dev/null | tee -a "$OUTPUT"
 cat /var/spool/cron/crontabs/root 2>/dev/null | tee -a "$OUTPUT"
 echo "" | tee -a "$OUTPUT"
 
+# Sensitive Files and Directories
+echo "Sensitive Files and Directories" | tee -a "$OUTPUT"
+echo "------------------------------" | tee -a "$OUTPUT"
+echo "/etc/passwd:" | tee -a "$OUTPUT"
+cat /etc/passwd | tee -a "$OUTPUT"
+echo "" | tee -a "$OUTPUT"
+echo "/etc/shadow (if readable):" | tee -a "$OUTPUT"
+cat /etc/shadow 2>/dev/null | tee -a "$OUTPUT"
+echo "" | tee -a "$OUTPUT"
+echo "/root (contents if accessible):" | tee -a "$OUTPUT"
+ls -la /root 2>/dev/null | tee -a "$OUTPUT"
+echo "" | tee -a "$OUTPUT"
+echo "Other sensitive files and directories:" | tee -a "$OUTPUT"
+find / -name "*.key" -o -name "*.pem" -o -name "*.cert" -o -name "*.crt" -o -name "*.bak" -o -name "*.old" -exec ls -l {} \; 2>/dev/null | tee -a "$OUTPUT"
+echo "" | tee -a "$OUTPUT"
+
 # Plain Text Passwords Search
 echo "Plain Text Passwords Search" | tee -a "$OUTPUT"
 echo "---------------------------" | tee -a "$OUTPUT"
@@ -118,6 +134,12 @@ grep -i user /etc/* 2>/dev/null | tee -a "$OUTPUT"
 grep -i pass /etc/* 2>/dev/null | tee -a "$OUTPUT"
 grep -C 5 "password" /etc/* 2>/dev/null | tee -a "$OUTPUT"
 find . -name "*.php" -print0 | xargs -0 grep -i -n "var $password" 2>/dev/null | tee -a "$OUTPUT"
+echo "" | tee -a "$OUTPUT"
+
+# Check for Weak File Permissions
+echo "Weak File Permissions" | tee -a "$OUTPUT"
+echo "---------------------" | tee -a "$OUTPUT"
+find / -type f -perm -o+w -exec ls -l {} \; 2>/dev/null | tee -a "$OUTPUT"
 echo "" | tee -a "$OUTPUT"
 
 # Network Configuration
