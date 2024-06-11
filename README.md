@@ -12,5 +12,5 @@ Git clone the repo to local attack box or copy and paste into a file within the 
 # Coming soon!!
 * Windows Powershell script (In Devlopment)
 
-*Please feel free to take and ajust to your own work flow.
+* Please feel free to take and ajust to your own work flow.
   
