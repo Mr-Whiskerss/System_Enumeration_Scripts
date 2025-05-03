@@ -1,21 +1,29 @@
-# System_Enumeration_Scripts
-A creation of scripts devloped to get quick system information to aid in build reviews.
+### System Enumeration Scripts
+A collection of PowerShell and Bash scripts for system enumeration on Windows, Linux, and macOS. Designed for penetration testers to quickly gather system, network, user, and privilege-related information.
 
-### Linux build review script in beta
-### Mac OS build review script in beta
+🔧 Features
+✅ OS & system info
+✅ Network & service enumeration
+✅ User & group discovery
+✅ Installed software & startup programs
+✅ Privilege escalation checks
+✅ Supports extended deep scans
 
-* Please feel free to take and ajust to your own work flow.
+📁 Scripts Included
+Windows_Enumerator_V1.0.ps1 – Windows enumeration (PowerShell)
+Linux_Basic_Enumerator_V1.0.sh – Linux enumeration (Bash)
+MacOS_Basic_Enumerator_V1.1.sh – macOS enumeration (Bash)
 
-# How to use
-Git clone the repo to local attack box or copy and paste into a file within the machine your enumerating. Make it excuteable for the .sh scripts use chmod +x then run with ./enum_script.sh. The script will output to a text file for you to take offline and go through. 
+⚙️ Usage
+🔹 Linux/macOS
+chmod +x Linux_Basic_Enumerator_V1.0.sh
+./Linux_Basic_Enumerator_V1.0.sh
 
+chmod +x MacOS_Basic_Enumerator_V1.1.sh
+./MacOS_Basic_Enumerator_V1.1.sh
 
-# Coming soon!!
-* Windows Powershell script (In Devlopment)
+🔹 Windows (Run in PowerShell)
+.\Windows_Enumerator_V1.0.ps1
 
-
-# To Fix
-* Mac OSX some commands dont work on M1,M2,M3
-
-
-  
+# Optional extended scan:
+.\Windows_Enumerator_V1.0.ps1 -Extended
