@@ -33,14 +33,14 @@ Write-Output "[*] Detected Operating System on ${computerName}: ${osCaption}`n"
 
 # Command dictionary
 $commands = [ordered]@{
-    # === 01 - Overview ===
+    # === Overview ===
     'Hostname'                       = 'hostname';
     'Current Username'              = '$env:USERNAME';
     'OS Name and Version'           = 'systeminfo | findstr /B /C:"OS Name" /C:"OS Version"';
     'System PATH'                   = '$env:PATH';
     'Environment Variables'         = 'Get-ChildItem Env: | Format-Table Key,Value -AutoSize';
 
-    # === 02 - System Summary Information ===
+    # === System Summary Information ===
     'Full System Info'              = 'systeminfo';
     'MSInfo32 System Summary'       = 'msinfo32 /report "$hostnamefolder\logs\02-MSinfo32.txt" /categories +systemsummary';
     'Driver List'                   = 'driverquery';
@@ -56,7 +56,7 @@ $commands = [ordered]@{
     'Folders with Everyone Access'  = 'Get-ChildItem "C:\\Program Files\\*" -Recurse -ErrorAction SilentlyContinue | ForEach-Object { try { Get-Acl $_.FullName } catch {} } | Where-Object { $_.AccessToString -match "Everyone" }';
     'User Home Directories'         = 'Get-ChildItem C:\\Users | Format-Table Name';
 
-    # === 03 - Network Information ===
+    # === Network Information ===
     'IP Configuration'              = 'ipconfig /all';
     'Route Table'                   = 'route print';
     'ARP Cache'                     = 'arp -A';
@@ -67,30 +67,30 @@ $commands = [ordered]@{
     'Network Interfaces' = 'Get-NetIPConfiguration | Format-Table InterfaceAlias,IPv4Address -AutoSize';
     'DNS Server Configuration' = 'Get-DnsClientServerAddress -AddressFamily IPv4 | Format-Table';
 
-    # === 03 - Firewall Status ===
+    # === Firewall Status ===
     'Legacy Firewall - State'       = 'netsh firewall show state';
     'Legacy Firewall - Config'      = 'netsh firewall show config';
     'Advanced Firewall - Profiles'  = 'netsh advfirewall show allprofiles';
 	
 	
-    # === 04 - User and Group Information ===
+    # === User and Group Information ===
     'List Local Users'                     = 'net users';
     'Local Administrator Details'          = 'net user administrator';
     'List Local Groups'                    = 'net localgroup';
     'Administrators Group Members'         = 'net localgroup administrators';
     'Local Password Policy'                = 'net accounts';
 
-    # === 05 - Scheduled Tasks ===
+    # === Scheduled Tasks ===
     'Scheduled Tasks (Verbose List)'       = 'schtasks /query /fo LIST /v';
 
-    # === 06 - Running Tasks and Services ===
+    # === Running Tasks and Services ===
     'Running Tasks with Services'          = 'tasklist /SVC';
 
-    # === 07 - Patch Information ===
+    # === Patch Information ===
     'Installed Hotfixes'                   = 'wmic qfe get Caption,Description,HotFixID,InstalledOn';
     'Defined KB Hotfixes (Filtered)'       = 'wmic qfe get Caption,Description,HotFixID,InstalledOn | findstr /C:"KB.." /C:"KB.."';
 
-    # === 08 - Registry Checks for Weak Configs ===
+    # === Registry Checks for Weak Configs ===
     'AlwaysInstallElevated - HKLM'       = 'reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer\AlwaysInstallElevated';
     'AlwaysInstallElevated - HKCU'       = 'reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer\AlwaysInstallElevated';
 
@@ -120,7 +120,7 @@ $commands = [ordered]@{
                                             'reg query "HKLM\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.0\Server"'
                                           );
 
-    # === 09 - Windows Services Access Checks ===
+    # === Windows Services Access Checks ===
     'AccessChk - Authenticated Users'    = 'cmd /c accesschk.exe -uwcqv "Authenticated Users" * /accepteula';
     'AccessChk - Everyone'               = 'cmd /c accesschk.exe -uwcqv "Everyone" * /accepteula';
     'AccessChk - All Services'           = 'cmd /c accesschk.exe -ucqv * /accepteula';
@@ -129,16 +129,16 @@ $commands = [ordered]@{
     'Service ACL Dump via ICACLS'        = '<loop through service paths and run icacls> # Requires dynamic logic';
     'Unquoted Service Paths'             = 'wmic service get name,displayname,pathname,startmode | findstr /i "auto" | findstr /i /v "c:\windows\\" | findstr /i /v """"';
 
-    # === 11 - Additional Domain Info (via Script) ===
+    # === Additional Domain Info (via Script) ===
     'Domain Controller Checks'           = 'Get-ADDomainController -Filter * | Select-Object Name, IPv4Address, Site, IsGlobalCatalog';
 
-    # === 12 - Time Synchronisation ===
+    # === Time Synchronisation ===
     'Time Sync Status'                   = 'w32tm /query /status';
 
-    # === 13 - Privilege Escalation Checks (Optional) ===
+    # === Privilege Escalation Checks (Optional) ===
     #'PowerUp All Checks'                = 'powershell.exe -ExecutionPolicy Bypass -File "$workingdir\scripts\PowerUp.ps1"; Invoke-AllChecks';
 
-    # === 14 - Interesting File Discovery ===
+    # === Interesting File Discovery ===
     'Search: Passwords in Files'           = 'findstr /si password *.xml *.ini *.txt';
     'Registry Search: Passwords (HKLM)'    = 'reg query HKLM /f password /t REG_SZ /s';
     'Registry Search: Passwords (HKCU)'    = 'reg query HKCU /f password /t REG_SZ /s';
