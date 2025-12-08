@@ -1,0 +1,30 @@
+FROM ubuntu:22.04
+
+# Install basic utilities that might be expected on a typical system
+RUN apt-get update && apt-get install -y \
+    bash \
+    coreutils \
+    net-tools \
+    iproute2 \
+    procps \
+    lsof \
+    findutils \
+    grep \
+    sed \
+    awk \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create a test user (enumeration should work without root)
+RUN useradd -m -s /bin/bash testuser
+
+WORKDIR /test
+
+# Copy the script
+COPY Linux_Basic_Enumerator_V1.0.sh /test/
+
+RUN chmod +x /test/Linux_Basic_Enumerator_V1.0.sh
+
+# Run as non-root user
+USER testuser
+
+CMD ["/bin/bash", "/test/Linux_Basic_Enumerator_V1.0.sh"]
