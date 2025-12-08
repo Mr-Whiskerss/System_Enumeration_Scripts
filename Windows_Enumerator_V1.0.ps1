@@ -19,6 +19,7 @@ if ($saveToFile -match '^(y|yes)$') {
     $logPath = "$PSScriptRoot\WindowsEnum_$timestamp.txt"
     Start-Transcript -Path $logPath -NoClobber
     Write-Output "`n[*] Logging output to: $logPath`n"
+    Write-Output "[*] Note: Output file contains sensitive system information - restrict access appropriately`n"
 }
 
 # Timestamp
@@ -77,6 +78,8 @@ if ($Extended) {
 }
 
 # Run all commands with headers
+# SECURITY NOTE: Uses Invoke-Expression with hardcoded commands from dictionary only
+# Never modify this function to accept user input directly
 function Run-Commands {
     param ($cmds)
     foreach ($entry in $cmds.GetEnumerator()) {

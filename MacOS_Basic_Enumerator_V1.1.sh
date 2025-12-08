@@ -11,7 +11,14 @@
 
 output_file="system_enumeration_report.txt"
 
+# Cleanup function for background processes
+cleanup() {
+    pkill -f "caffeinate" 2>/dev/null || true
+}
+trap cleanup EXIT
+
 # Function to run a command and append its output to the log
+# SECURITY NOTE: Uses eval with hardcoded commands only - never pass user input to this function
 run_and_log() {
     echo "===== $1 =====" >> "$output_file"
     if command -v ${3:-true} >/dev/null 2>&1; then
@@ -24,6 +31,9 @@ run_and_log() {
 
 # Clear previous output
 > "$output_file"
+
+# Set secure permissions (file contains sensitive system information)
+chmod 600 "$output_file"
 
 echo "Starting enumeration on $(hostname) at $(date)" >> "$output_file"
 echo "--------------------------------------------------" >> "$output_file"
