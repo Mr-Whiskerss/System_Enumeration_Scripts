@@ -1,0 +1,29 @@
+FROM alpine:3.18
+
+# Install busybox-based utilities (minimal system test)
+RUN apk add --no-cache \
+    bash \
+    coreutils \
+    net-tools \
+    iproute2 \
+    procps \
+    lsof \
+    findutils \
+    grep \
+    sed \
+    gawk
+
+# Create a test user
+RUN adduser -D -s /bin/bash testuser
+
+WORKDIR /test
+
+# Copy the script
+COPY Linux_Basic_Enumerator_V1.0.sh /test/
+
+RUN chmod +x /test/Linux_Basic_Enumerator_V1.0.sh
+
+# Run as non-root user
+USER testuser
+
+CMD ["/bin/bash", "/test/Linux_Basic_Enumerator_V1.0.sh"]

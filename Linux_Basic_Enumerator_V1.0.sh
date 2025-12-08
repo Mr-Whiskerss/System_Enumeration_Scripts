@@ -13,6 +13,9 @@ OUTPUT="system_enumeration_report.txt"
 # Create or clear the output file
 : > "$OUTPUT"
 
+# Set secure permissions (file contains sensitive system information)
+chmod 600 "$OUTPUT"
+
 echo "System Enumeration Report" | tee -a "$OUTPUT"
 echo "=========================" | tee -a "$OUTPUT"
 echo "" | tee -a "$OUTPUT"
